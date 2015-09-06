@@ -60,7 +60,7 @@ module Rerun
       end
 
       @thread = Thread.new do
-        @listener = Listen.to(*@directories, only: watching, ignore: ignoring, wait_for_delay: 1) do |modified, added, removed|
+        @listener = Listen.to(*@directories, only: watching, ignore: ignoring, wait_for_delay: 1, latency: 5, force_polling: true) do |modified, added, removed|
           if((modified.size + added.size + removed.size) > 0)
             @client_callback.call(:modified => modified, :added => added, :removed => removed)
           end
